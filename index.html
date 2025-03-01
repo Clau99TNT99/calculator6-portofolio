@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toader Claudiu</title>
+    <link rel="icon" href="image/claudiu.jpg" type="image/x-icon"/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f3f4f6;
+        }
+        .poza-tdr {
+            padding-top: 4px;
+            width: 100px;
+            float: left;
+            height:auto;
+            border-radius: 25px;
+        } 
+        .tdr {
+            text-align: center;
+            width: auto;
+            margin-top: 5px;
+            font-style: oblique;
+            color: #007BFF;
+            cursor: pointer;
+        }
+        .tdr:hover {
+            color: white;
+            transition: 1s ease-in-out;
+            background-color: #0056b3;
+        }
+        .calculator {
+            width: 300px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .display {
+            width: 100%;
+            height: 50px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+            text-align: right;
+            font-size: 1.5rem;
+            padding: 0 10px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .error {
+            color: red;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        button {
+            height: 50px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .operator {
+            background-color: #FFC107;
+        }
+        .operator:hover {
+            background-color: #e0a800;
+        }
+        .equal {
+            background-color: #28a745;
+            grid-column: span 2;
+        }
+        .equal:hover {
+            background-color: #218838;
+        }
+        .clear {
+            background-color: #dc3545;
+        }
+        .clear:hover {
+            background-color: #c82333;
+        }
+        .delete {
+            background-color: #6c757d;
+        }
+        .delete:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <img src="/image/claudiu.jpg" class="poza-tdr"/>
+        <h1 class="tdr">Toader Claudiu</h1>
+        
+        <input type="text" id="display" class="display" disabled>
+        <div class="buttons">
+            <button onclick="clearDisplay()" class="clear">C</button>
+            <button onclick="deleteLast()" class="delete">⌫</button>
+            <button onclick="appendValue('/')" class="operator">/</button>
+            <button onclick="appendValue('*')" class="operator">*</button>
+            
+            <button onclick="appendValue('7')">7</button>
+            <button onclick="appendValue('8')">8</button>
+            <button onclick="appendValue('9')">9</button>
+            <button onclick="appendValue('-')" class="operator">-</button>
+            
+            <button onclick="appendValue('4')">4</button>
+            <button onclick="appendValue('5')">5</button>
+            <button onclick="appendValue('6')">6</button>
+            <button onclick="appendValue('+')" class="operator">+</button>
+            
+            <button onclick="appendValue('1')">1</button>
+            <button onclick="appendValue('2')">2</button>
+            <button onclick="appendValue('3')">3</button>
+            <button onclick="appendValue('0')">0</button>
+            
+            <button onclick="appendValue('.')">.</button>
+            <button onclick="calculate()" class="equal">=</button>
+        </div>
+    </div>
+    
+    <script>
+       
+        const display = document.getElementById('display');
+        
+        function appendValue(value) {
+            if (display.classList.contains('error')) {
+                clearDisplay(); // Dacă a fost o eroare, resetează display-ul
+            }
+            display.value += value;
+        }
+        
+        function clearDisplay() {
+            display.value = '';
+            display.classList.remove('error'); // Elimină culoarea de eroare
+        }
+        
+        function deleteLast() {
+            display.value = display.value.slice(0, -1);
+        }
+        
+        function calculate() {
+            try {
+                display.value = eval(display.value);
+                display.classList.remove('error');
+            } catch {
+                display.value = 'Error';
+                display.classList.add('error');
+            }
+        }
+        
+        // Adăugăm suport pentru tastatură
+        document.addEventListener('keydown', function(event) {
+            const key = event.key;
+            
+            if (/[\d\+\-\*\/\.]/.test(key)) {
+                appendValue(key);
+            } else if (key === 'Enter') {
+                calculate();
+            } else if (key === 'Backspace') {
+                deleteLast();
+            } else if (key === 'Escape') {
+                clearDisplay();
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
